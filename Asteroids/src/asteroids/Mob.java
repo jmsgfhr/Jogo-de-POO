@@ -107,7 +107,6 @@ public class Mob {
         else if(child == 2){
             mob.draw(shiftMobX,shiftMobY,0.4f);//asteroid pequeno
         }
-        g.draw(mobShape);
     }
     
     public Shape getShape(){ // retorna o shape de um unico asteroid

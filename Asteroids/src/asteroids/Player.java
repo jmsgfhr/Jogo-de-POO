@@ -24,16 +24,22 @@ public class Player extends Play{
     private float angle;
     private float speed;
     public Shot tiro; // um unico tiro
-    public ArrayList<Shot> shot = new ArrayList<Shot>(); //lista de tiros
+    public ArrayList<Shot> shot = new ArrayList<>(); //lista de tiros
+    private int SCORE;
+    private int VIDAS;
+    private final Sound laser;
 
-    public Player(int state) {
+    public Player(int state) throws SlickException {
         super(state);
+        this.laser = new Sound("Sounds/laser.wav");
     }
     
     public void init(GameContainer gc) throws SlickException{
         speed = .1f;
         player = new Image("Art/player.png");
         playerShape = new Rectangle(shiftX, shiftY, player.getWidth(), player.getHeight());
+        SCORE = 0;
+        VIDAS = 3;
     }
     
     public void update(GameContainer gc, int delta) throws SlickException {
@@ -68,8 +74,9 @@ public class Player extends Play{
         }
         player.setRotation(angle);
         player.draw(shiftX, shiftY, 1);
-        g.drawString(""+playerPosX+" "+playerPosY, shiftX, shiftY);
-        g.draw(playerShape);
+        
+        g.drawString("Pontuação: " + get_pontuacao(), 500, 10);
+        g.drawString("Vidas: " + get_vidas(), 700, 10);
         
         //render do tiro do player
         for(Shot s: shot){
@@ -93,6 +100,7 @@ public class Player extends Play{
             if((System.currentTimeMillis()-tickerTiro)>600){//verifica o tempo da ultima vez que atirou foi a mais de 600 milisegundos
                 shot.add(new Shot(1,gc, shiftX+player.getWidth()/2, shiftY+player.getHeight()/2, angle));
                 tickerTiro = System.currentTimeMillis(); // "zera" a contagem do tempo de tiro
+                laser.play();
             }
         }
     }
@@ -100,7 +108,6 @@ public class Player extends Play{
     private void moveUp(int delta){
         playerPosX -= (float) Math.cos(Math.toRadians(angle+90))*delta*speed;
         playerPosY -= (float) Math.sin(Math.toRadians(angle+90))*delta*speed;
-        System.out.println(Math.cos(Math.toRadians(angle+90)));
     }
     
     private void rotateLeft(int delta){
@@ -135,5 +142,21 @@ public class Player extends Play{
     public void reset(){
         playerPosX = 0;
         playerPosY = 0;
+    }
+    
+    public void set_pontuacao(int pont){
+        SCORE = pont;
+    }
+    
+    public int get_pontuacao(){
+        return SCORE;
+    }
+    
+    public void set_vidas(int vidas){
+        VIDAS = vidas;
+    }
+    
+    public int get_vidas(){
+        return VIDAS;
     }
 }

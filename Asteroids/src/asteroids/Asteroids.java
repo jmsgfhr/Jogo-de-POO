@@ -11,7 +11,7 @@ public class Asteroids extends StateBasedGame{
     public static final int menu = 0; //codio do estado da tela
     public static final int play = 1;
     
-    public Asteroids(String gamename){// construct asteroid
+    public Asteroids(String gamename) throws SlickException{// construct asteroid
         super(gamename);
         this.addState(new Menu(menu)); // inciando estado menu e abrindo na tela inicial
         this.addState(new Play(play)); // iniciando estado play

@@ -12,6 +12,7 @@ public class Menu extends BasicGameState{
     
     public Color corStart = Color.yellow;
     public Color corExit = Color.orange;
+    public static Sound space;
     
     public Menu(int state){
         
@@ -22,6 +23,7 @@ public class Menu extends BasicGameState{
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
         
+        this.space = new Sound("Sounds/space.wav");
     }
     
     @Override
@@ -47,6 +49,7 @@ public class Menu extends BasicGameState{
         if((xpos>380 && xpos<480) && (ypos>255 && ypos<320)){ //verifica se o ponteiro esta sobre o retangulo start
             corStart = Color.green; //hover do retangulo start
             if(mouse.isMouseButtonDown(0)){ //evento apertar botao do mouse
+                sbg.getState(1).init(gc, sbg);
                 sbg.enterState(1); //altera o estado para trocar a "cena" do jogo
             }
         }
@@ -60,6 +63,7 @@ public class Menu extends BasicGameState{
             corStart = Color.yellow;
             corExit = Color.orange;
         }
+        if(!space.playing()) space.loop();
         
     }
     
